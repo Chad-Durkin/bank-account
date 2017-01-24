@@ -17,5 +17,20 @@ $(document).ready(function() {
     console.log(newAccountName);
     console.log(newAccountPassword);
     console.log(initialDeposit);
+    $("input#account-name").val("");
+    $("input#account-password").val("");
+    $("input#initial-deposit").val("");
+  })
+
+  $("#deposit-withdraw").submit(function(event) {
+    event.preventDefault();
+    var depositAmount = $("input#deposit-amount").val();
+    var withdrawalAmount = $("input#withdrawal-amount").val();
+
+    console.log(depositAmount);
+    console.log(withdrawalAmount);
+
+    $("input#deposit-amount").val("");
+    $("input#withdrawal-amount").val("");
   })
 })
