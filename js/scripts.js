@@ -4,7 +4,7 @@ function Account(name, password, transactionAmount) {
   this.accountPassword = password;
 }
 
-var lookupAccount = function(accountArray, accountName, depositAmount, withdrawalAmount) {
+var editAccount = function(accountArray, accountName, depositAmount, withdrawalAmount) {
   for(var index = 0; index < accountArray.length; index++) {
     if(accountArray[index].accountName === accountName) {
       var accountPassword = prompt("Enter the account's password: ");
@@ -58,13 +58,13 @@ var accountsArray = [];
 
   $("#deposit-withdraw").submit(function(event) {
     event.preventDefault();
-    var accountNameLookup = $("input#account-name-lookup").val();
+    var accountNameEdit = $("input#account-name-edit").val();
     var depositAmount = $("input#deposit-amount").val();
     var withdrawalAmount = $("input#withdrawal-amount").val();
 
 
     //lookup account name from arrays and return it
-    lookupAccount(accountsArray, accountNameLookup, depositAmount, withdrawalAmount);
+    editAccount(accountsArray, accountNameEdit, depositAmount, withdrawalAmount);
     //add deposit ammount and subtract withdrawl ammount
 
     //if the account name is wrong, output "no account named i.e"
