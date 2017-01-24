@@ -4,19 +4,24 @@ function Account(name, password, transactionAmount) {
   this.accountPassword = password;
 }
 
-
-
 $(document).ready(function() {
 
   $("#register-account").submit(function(event) {
     event.preventDefault();
+    var accountsArray = [];
     var newAccountName = $("input#account-name").val();
     var newAccountPassword = $("input#account-password").val();
     var initialDeposit = $("input#initial-deposit").val();
 
-    console.log(newAccountName);
-    console.log(newAccountPassword);
-    console.log(initialDeposit);
+    //create a new account constructor
+    var newAccount = new Account(newAccountName, newAccountPassword, initialDeposit);
+    //input new account into the account holding array
+    accountsArray.push(newAccount);
+
+    console.log(accountsArray[0]);
+
+
+    //clear forms
     $("input#account-name").val("");
     $("input#account-password").val("");
     $("input#initial-deposit").val("");
@@ -27,9 +32,7 @@ $(document).ready(function() {
     var depositAmount = $("input#deposit-amount").val();
     var withdrawalAmount = $("input#withdrawal-amount").val();
 
-    console.log(depositAmount);
-    console.log(withdrawalAmount);
-
+    //clear forms
     $("input#deposit-amount").val("");
     $("input#withdrawal-amount").val("");
   })
