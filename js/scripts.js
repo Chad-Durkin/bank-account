@@ -4,10 +4,24 @@ function Account(name, password, transactionAmount) {
   this.accountPassword = password;
 }
 
-var lookupAccount = function(accountArray, accountName) {
+var lookupAccount = function(accountArray, accountName, depositAmount, withdrawalAmount) {
   for(var index = 0; index < accountArray.length; index++) {
     if(accountArray[index].accountName === accountName) {
-      return accountArray[index];
+      var accountPassword = prompt("Enter the account's password: ");
+      if(accountArray[index].accountPassword === accountPassword) {
+        accountTransaction(accountArray[index], depositAmount, withdrawalAmount);
+        console.log(accountArray[index]);
+        return alert("Transaction Completed! Thank you for using Epicodus Credit Union!");
+      } else {
+          var accountPassword = prompt("The password you enter does not match the one we have on record, please try again: ");
+          if(accountArray[index].accountPassword === accountPassword) {
+            accountTransaction(accountArray[index], depositAmount, withdrawalAmount);
+            console.log(accountArray[index]);
+            return alert("Transaction Completed! Thank you for using Epicodus Credit Union!");
+          } else {
+              return alert("To many failed password attempts, please try again at a nother time");
+          }
+      }
     }
   }
 
@@ -50,8 +64,7 @@ var accountsArray = [];
 
 
     //lookup account name from arrays and return it
-    var accountCalled = lookupAccount(accountsArray, accountNameLookup);
-    accountTransaction(accountCalled, depositAmount, withdrawalAmount);
+    lookupAccount(accountsArray, accountNameLookup, depositAmount, withdrawalAmount);
     //add deposit ammount and subtract withdrawl ammount
 
     //if the account name is wrong, output "no account named i.e"
