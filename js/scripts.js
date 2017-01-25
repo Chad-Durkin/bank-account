@@ -2,6 +2,7 @@ function Account(name, password, transactionAmount) {
   this.accountName = name;
   this.accountBalance = transactionAmount;
   this.accountPassword = password;
+  this.accountTransactionHistory;
 }
 
 var editAccount = function(accountArray, accountName, depositAmount, withdrawalAmount) {
@@ -25,15 +26,38 @@ var editAccount = function(accountArray, accountName, depositAmount, withdrawalA
     }
   }
 
-  return alert("There is no account named: " + accountName)
+  return alert("There is no account named: " + accountName + ".")
 }
 
 var accountTransaction = function(account, depositAmount, withdrawalAmount) {
+  var balanceBefore = account.accountBalance;
   var balance = parseInt(account.accountBalance);
   balance += parseInt(depositAmount);
   balance -= parseInt(withdrawalAmount);
+  if(balance < 0) {
+    alet("You overdrew on your account! You have 10 days to add money into your account or you will be charged an overdraft fee");
+  }
+  var transaction = "Balance before: " + balanceBefore + ". Deposited: " + depositAmount + ". Withdrew: " + withdrawalAmount + ". Balance after: " + balance + ".";
+  console.log(transaction);
   account.accountBalance = balance;
   console.log(account.accountBalance);
+}
+
+var accessAccount = function(accountsArray, accountName, accountPassword) {
+  for(var index = 0; index < accountsArray.length; index++) {
+    if(accountsArray[index].accountName === accountName && accountsArray[index].accountPassword === accountPassword) {
+      console.log("it worked");
+        return pullUpAccountInfo(accountsArray[index]);
+    }
+  }
+
+  return alert("You entered an incorrect account name & password");
+}
+
+var pullUpAccountInfo = function(theAccount) {
+  var accountName = theAccount.accountName;
+  var accountBalance = theAccount.accountBalance;
+  var accountPassword = theAccount.accountPassword;
 }
 
 $(document).ready(function() {
@@ -62,18 +86,23 @@ var accountsArray = [];
     var depositAmount = $("input#deposit-amount").val();
     var withdrawalAmount = $("input#withdrawal-amount").val();
 
-
     //lookup account name from arrays and return it
     editAccount(accountsArray, accountNameEdit, depositAmount, withdrawalAmount);
-    //add deposit ammount and subtract withdrawl ammount
-
-    //if the account name is wrong, output "no account named i.e"
-    //if withdrawl amount is more than account balance AFTER deposit, output "your account balance is to low to withdraw that amount"
-
 
     //clear forms
-    $("input#account-name-lookup").val("");
+    $("input#account-name-edit").val("");
     $("input#deposit-amount").val("");
     $("input#withdrawal-amount").val("");
+  })
+
+  $("#lookup-account").submit(function(event) {
+    event.preventDefault();
+    var accountNameLookup = $("input#account-name-lookup").val();
+    var accountPasswordLookup = $("input#account-password-lookup").val();
+
+    accessAccount(accountsArray, accountNameLookup, accountPasswordLookup);
+
+    $("input#account-name-lookup").val("");
+    $("input#account-password-lookup").val("");
   })
 })
